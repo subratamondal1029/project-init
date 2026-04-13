@@ -1,0 +1,37 @@
+{
+  "name": "project-init",
+  "version": "1.0.0",
+  "description": "Project initializer for my projects with initial configs",
+  "main": "src/index.ts",
+  "bin": {
+    "project-init": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc && tsc-alias --resolve-full-paths --resolve-full-extensions .js",
+    "type:check": "tsc --noEmit",
+    "format:check": "prettier --check src/**/*.{ts,tsx,js,jsx}",
+    "format:write": "prettier --write src/**/*.{ts,tsx,js,jsx}",
+    "lint:check": "eslint src/**/*.{ts,tsx,js,jsx}",
+    "lint:fix": "eslint src/**/*.{ts,tsx,js,jsx} --fix",
+    "lint:stage": "lint-staged",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "project",
+    "initializer",
+    "configs"
+  ],
+  "author": "Subrata Mondal",
+  "license": "MIT",
+  "packageManager": "pnpm@10.33.0",
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ],
+    "src/**/*.{ts,tsx,js,jsx,md}": [
+      "prettier --write"
+    ]
+  }
+}
