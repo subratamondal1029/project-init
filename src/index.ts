@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-console.log("Project initialized!")
+console.log("Project initialized!");
