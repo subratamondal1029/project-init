@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Project initializer for my projects with initial configs",
   "main": "src/index.ts",
+  "type": "module",
   "bin": {
     "project-init": "dist/index.js"
   },
@@ -11,10 +12,10 @@
     "start": "node dist/index.js",
     "build": "tsc && tsc-alias --resolve-full-paths --resolve-full-extensions .js",
     "type:check": "tsc --noEmit",
-    "format:check": "prettier --check src/**/*.{ts,tsx,js,jsx}",
-    "format:write": "prettier --write src/**/*.{ts,tsx,js,jsx}",
-    "lint:check": "eslint src/**/*.{ts,tsx,js,jsx}",
-    "lint:fix": "eslint src/**/*.{ts,tsx,js,jsx} --fix",
+    "format:check": "prettier --check src/**/*.{ts,js,md}",
+    "format:write": "prettier --write src/**/*.{ts,js,md}",
+    "lint:check": "eslint src",
+    "lint:fix": "eslint src --fix",
     "lint:stage": "lint-staged",
     "prepare": "husky"
   },
@@ -27,11 +28,23 @@
   "license": "MIT",
   "packageManager": "pnpm@10.33.0",
   "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx}": [
+    "src/**/*.ts": [
       "eslint --fix"
     ],
-    "src/**/*.{ts,tsx,js,jsx,md}": [
+    "src/**/*.{ts,js,md}": [
       "prettier --write"
     ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.2"
   }
 }
