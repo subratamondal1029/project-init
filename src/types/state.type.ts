@@ -8,6 +8,7 @@ export type SharedState = {
 };
 
 export type TsState = {
+  packageManager: "npm" | "pnpm";
   eslint: boolean;
   prettier: boolean;
   lintStaged: boolean;
