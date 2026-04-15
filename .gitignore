@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 note.md
 
 playground/*
+
+# IDE
+.vscode
