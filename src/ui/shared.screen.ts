@@ -40,8 +40,9 @@ const questions = [
     name: "gitOrigin",
     type: "input",
     message: "Enter the git origin URL",
-    initial: sharedState.gitOrigin,
+    initial: sharedState.gitOrigin ?? "",
     validate: sharedSchema.gitOrigin,
+    // Skip this prompt when git initialization is false
     skip() {
       return !(this as unknown as { state: { answers: SharedState } }).state.answers?.git;
     },

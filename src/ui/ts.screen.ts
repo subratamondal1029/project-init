@@ -57,6 +57,7 @@ const questions = [
     message: "Would you like to use commitlint?",
     initial: tsState.commitLint,
     validate: tsSchema.commitLint,
+    // When husky is disabled, skip commitLint and force its value to false.
     skip() {
       const isSkipped = !this.state?.answers?.husky;
       if (isSkipped) {
