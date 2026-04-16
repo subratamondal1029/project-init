@@ -1,13 +1,13 @@
-import type { TsState as State, TsPackageManagers } from "@/types/state.type.js";
+import type { TsState as State } from "@/types/state.type.js";
+import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 
 // store typescript questions answers with default value
 class TsState implements State {
-  public packageManager: TsPackageManagers;
+  public packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
   public eslint: boolean;
   public prettier: boolean;
   public lintStaged: boolean;
   public husky: boolean;
-  public preCommit: string;
   public commitLint: boolean;
   public installDeps: boolean;
 
@@ -17,7 +17,6 @@ class TsState implements State {
     this.prettier = true;
     this.lintStaged = true;
     this.husky = true;
-    this.preCommit = "pnpm run lint:stage";
     this.commitLint = true;
     this.installDeps = true;
   }
