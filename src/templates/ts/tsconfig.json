@@ -9,9 +9,7 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@config/*": ["src/config/*"],
-      "@utils/*": ["src/utils/*"]
+      "@/*": ["src/*"]
     },
 
     /* Output */
@@ -27,9 +25,10 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
 
-    "types": ["@types/node"]
+    /* Types */
+    "types": ["node"]
   },
 
   "include": ["src"],
-  "exclude": ["src/templates", "node_modules", "dist"]
+  "exclude": ["node_modules", "dist"]
 }
