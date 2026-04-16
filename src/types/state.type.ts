@@ -7,8 +7,9 @@ export type SharedState = {
   gitOrigin?: string;
 };
 
+export type TsPackageManagers = "npm" | "pnpm";
 export type TsState = {
-  packageManager: "npm" | "pnpm";
+  packageManager: TsPackageManagers;
   eslint: boolean;
   prettier: boolean;
   lintStaged: boolean;
