@@ -1,5 +1,5 @@
 const eslintConfig = {
-  "*.{js,ts,tsx}": ["eslint --fix"],
+  "src/**/*.{js,ts,tsx}": ["eslint --fix"],
 };
 
 export default eslintConfig;
