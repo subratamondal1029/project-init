@@ -14,13 +14,8 @@ export const run = async (
   const res = await execa(tool, args, {
     cwd: options?.cwd ?? process.cwd(),
     stdio: options?.stdio ?? "inherit",
-    timeout: options?.timeout || 10000,
+    timeout: options?.timeout ?? 10000,
   });
-
-  if (res.stderr) {
-    const errorMessage = typeof res.stderr === "string" ? res.stderr : res.stderr.join("\n");
-    throw new Error(errorMessage || "");
-  }
 
   return res;
 };
