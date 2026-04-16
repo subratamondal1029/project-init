@@ -1,0 +1,14 @@
+// pick optional scripts based on user selection
+
+const scripts = {
+  dev: "tsx --watch src/index.ts",
+  start: "node dist/index.js",
+  build: "tsc && tsc-alias --resolve-full-paths --resolve-full-extension .js",
+  "type:check": "tsc --noEmit",
+  "format:check": 'prettier --check "src"',
+  "format:write": 'prettier --write "src"',
+  "lint:check": "eslint src",
+  "lint:fix": "eslint src --fix",
+  "lint:stage": "lint-staged",
+  prepare: "husky",
+};
