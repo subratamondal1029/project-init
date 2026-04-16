@@ -13,9 +13,10 @@ export const tsSchema: Record<keyof TsState, (value: unknown) => boolean | strin
   packageManager: validator(
     z
       .string()
-      .lowercase()
-      .refine((v) =>
-        AVAILABLE_PACKAGE_MANAGERS.includes(v as (typeof AVAILABLE_PACKAGE_MANAGERS)[number])
+      .refine(
+        (v): v is (typeof AVAILABLE_PACKAGE_MANAGERS)[number] =>
+          AVAILABLE_PACKAGE_MANAGERS.includes(v as (typeof AVAILABLE_PACKAGE_MANAGERS)[number]),
+        { message: "Invalid package manager" }
       )
   ),
   installDeps: booleanSchema,
