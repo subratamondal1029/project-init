@@ -1,0 +1,2 @@
+# pnpm dlx will replace with npx by user select
+pnpm dlx commitlint --edit $1
