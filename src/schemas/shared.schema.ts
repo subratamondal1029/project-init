@@ -8,5 +8,5 @@ export const sharedSchema: Record<keyof SharedState, (value: unknown) => boolean
   language: validator(z.string().min(1).max(5)),
   projectName: validator(z.string().min(2).max(100)),
   git: booleanSchema,
-  gitOrigin: validator(z.string().min(2).max(200)),
+  gitOrigin: validator(z.string().min(2).max(200).optional()),
 };
