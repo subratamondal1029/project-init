@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-console.log("Project initialized!");
+import { showWelcome } from "@/ui/welcome.screen.js";
+
+showWelcome();
