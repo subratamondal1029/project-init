@@ -31,5 +31,5 @@
   },
 
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["src/templates", "node_modules", "dist"]
 }
