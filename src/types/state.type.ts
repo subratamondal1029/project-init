@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGE } from "@/constants.js";
+import { AVAILABLE_LANGUAGE, AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 
 export type SharedState = {
   language: (typeof AVAILABLE_LANGUAGE)[number]["code"];
@@ -7,9 +7,8 @@ export type SharedState = {
   gitOrigin?: string;
 };
 
-export type TsPackageManagers = "npm" | "pnpm";
 export type TsState = {
-  packageManager: TsPackageManagers;
+  packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
   eslint: boolean;
   prettier: boolean;
   lintStaged: boolean;
