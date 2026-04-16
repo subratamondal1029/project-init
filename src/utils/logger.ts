@@ -5,6 +5,6 @@ export const logger = createConsola({
   formatOptions: {
     compact: true,
     colors: true,
-    date: false
-  }
+    date: false,
+  },
 });
