@@ -13,7 +13,6 @@ export type TsState = {
   prettier: boolean;
   lintStaged: boolean;
   husky: boolean;
-  preCommit: string;
   commitLint: boolean;
   installDeps: boolean;
 };
