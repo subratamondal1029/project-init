@@ -12,3 +12,5 @@ const scripts = {
   "lint:stage": "lint-staged",
   prepare: "husky",
 };
+
+export default scripts;
