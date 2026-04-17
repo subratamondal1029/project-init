@@ -1,8 +1,9 @@
-import Enquirer, { type Prompt } from "enquirer";
+import { type Prompt } from "enquirer";
 import type { TsState } from "@/types/state.type.js";
 import { tsState } from "@/state/ts.state.js";
 import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 import { tsSchema } from "@/schemas/ts.schema.js";
+import { ask } from "@/utils/ask.js";
 
 type TsQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
   name: keyof TsState;
@@ -77,8 +78,7 @@ const questions = [
 ] satisfies TsQuestion[];
 
 export const getTsAnswers = async (): Promise<TsState> => {
-  const enquirer = new Enquirer<TsState>();
-  const answers = await enquirer.prompt(questions);
+  const answers = (await ask(questions)) as TsState;
   tsState.setValues(answers);
   return answers;
 };

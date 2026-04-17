@@ -1,8 +1,9 @@
-import Enquirer, { type Prompt } from "enquirer";
+import { type Prompt } from "enquirer";
 import type { SharedState } from "@/types/state.type.js";
 import { sharedState } from "@/state/shared.state.js";
 import { AVAILABLE_LANGUAGE } from "@/constants.js";
 import { sharedSchema } from "@/schemas/shared.schema.js";
+import { ask } from "@/utils/ask.js";
 
 type SharedQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
   name: keyof SharedState;
@@ -50,8 +51,7 @@ const questions = [
 ] satisfies SharedQuestion[];
 
 export const getSharedAnswers = async (): Promise<SharedState> => {
-  const enquirer = new Enquirer<SharedState>();
-  const answers = await enquirer.prompt(questions);
+  const answers = (await ask(questions)) as SharedState;
   sharedState.setValues(answers);
   return answers;
 };
