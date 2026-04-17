@@ -4,6 +4,7 @@ import { showWelcome } from "@/ui/welcome.screen.js";
 import { getSharedAnswers } from "@/ui/shared.screen.js";
 import { selectLanguageScreen } from "@/utils/selectLanguageScreen.js";
 import { logger } from "@/utils/logger.js";
+import { initProject } from "@/core/index.js";
 
 showWelcome();
 
@@ -17,8 +18,8 @@ showWelcome();
       process.exit(1);
     }
 
-    const langAnswers = (await langScreen()) as Record<string, unknown>;
-    logger.box(JSON.stringify({ ...sharedAnswers, ...langAnswers }, null, 2)); //NOTE: temporary display
+    await langScreen();
+    await initProject();
   } catch (error) {
     if (error instanceof Error && error.message.includes("cancelled")) {
       process.exit(0);
