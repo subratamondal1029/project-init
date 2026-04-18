@@ -11,7 +11,7 @@ class SharedState implements State {
   constructor() {
     this.language = "TS";
     this.projectName = "my-project";
-    this.git = true;
+    this.git = false;
     this.gitOrigin = "https://github.com/username/repo.git";
   }
 

@@ -13,12 +13,12 @@ class TsState implements State {
 
   constructor() {
     this.packageManager = "pnpm";
-    this.eslint = true;
-    this.prettier = true;
-    this.lintStaged = true;
-    this.husky = true;
-    this.commitLint = true;
-    this.installDeps = true;
+    this.eslint = false;
+    this.prettier = false;
+    this.lintStaged = false;
+    this.husky = false;
+    this.commitLint = false;
+    this.installDeps = false;
   }
 
   setValues(answers: Partial<State>) {
