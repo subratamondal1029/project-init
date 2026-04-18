@@ -1,32 +1,10 @@
-//  "devDependencies": [
-//      "@commitlint/cli",
-//      "@commitlint/config-conventional",
-//      "@eslint/js",
-//      "@types/node",
-//      "eslint",
-//      "husky",
-//      "lint-staged",
-//      "prettier",
-//      "tsc-alias",
-//      "tsx",
-//      "typescript",
-//      "typescript-eslint"
-//  ]
+import { tsState } from "@/state/ts.state.js";
 
-type Tools = [
-    "eslint",
-    "prettier",
-    "lint-staged",
-    "husky",
-    "commitlint",
-    "default"
-]
-
-export const dependencies: Record<Tools[number], string[]> = {
+export const dependencies: Partial<Record<keyof typeof tsState | "default", string[]>> = {
     eslint: ["eslint", "typescript-eslint", "@eslint/js"],
     prettier: ["prettier"],
-    "lint-staged": ["lint-staged"],
+    "lintStaged": ["lint-staged"],
     husky: ["husky"],
-    commitlint: ["@commitlint/cli", "@commitlint/config-conventional"],
+    commitLint: ["@commitlint/cli", "@commitlint/config-conventional"],
     default: ["typescript", "tsc-alias", "tsx", "@types/node"]
 }
