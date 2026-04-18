@@ -1,6 +1,11 @@
 import type { TsState as State } from "@/types/state.type.js";
 import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 
+export const PACKAGE_MANAGER_EXEC: Record<(typeof AVAILABLE_PACKAGE_MANAGERS)[number], string> = {
+  pnpm: "pnpm dlx",
+  npm: "npx",
+} as const;
+
 // store typescript questions answers with default value
 class TsState implements State {
   public packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
