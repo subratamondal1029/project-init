@@ -64,7 +64,7 @@ const questions = [
     type: "confirm",
     name: "commitLint",
     message: "Would you like to use commitlint?",
-    initial: tsState.commitLint,
+    initial: true,
     validate: tsSchema.commitLint,
     skip() {
       // Skip when Husky is disabled or git is disabled.
