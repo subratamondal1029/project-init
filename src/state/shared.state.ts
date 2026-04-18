@@ -1,6 +1,8 @@
 import { AVAILABLE_LANGUAGE } from "@/constants.js";
 import type { SharedState as State } from "@/types/state.type.js";
 
+export const DEFAULT_GIT_ORIGIN = "https://github.com/user/repo.git" as const;
+
 // store shared questions answers with default value
 class SharedState implements State {
   public language: (typeof AVAILABLE_LANGUAGE)[number]["code"];
@@ -12,7 +14,7 @@ class SharedState implements State {
     this.language = "TS";
     this.projectName = "my-project";
     this.git = false;
-    this.gitOrigin = "https://github.com/username/repo.git";
+    this.gitOrigin = DEFAULT_GIT_ORIGIN;
   }
 
   setValues(answers: Partial<State>) {
