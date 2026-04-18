@@ -2,7 +2,7 @@
 
 import { showWelcome } from "@/ui/welcome.screen.js";
 import { getSharedAnswers } from "@/ui/shared.screen.js";
-import { selectLanguageScreen } from "@/utils/selectLanguageScreen.js";
+import { selectLanguage } from "@/utils/selectLanguage.js";
 import { logger } from "@/utils/logger.js";
 import { initProject } from "@/core/index.js";
 
@@ -11,7 +11,7 @@ showWelcome();
 (async () => {
   try {
     const sharedAnswers = await getSharedAnswers();
-    const langScreen = selectLanguageScreen(sharedAnswers.language);
+    const { screen: langScreen, init: langInit } = selectLanguage(sharedAnswers.language);
 
     if (!langScreen) {
       logger.error(`Unsupported language: ${sharedAnswers.language}`);
@@ -20,6 +20,7 @@ showWelcome();
 
     await langScreen();
     await initProject();
+    await langInit();
   } catch (error) {
     if (error instanceof Error && error.message.includes("cancelled")) {
       process.exit(0);
