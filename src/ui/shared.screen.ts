@@ -33,7 +33,7 @@ const questions = [
     name: "git",
     type: "confirm",
     message: "Initialize git repository?",
-    initial: sharedState.git,
+    initial: true,
     validate: sharedSchema.git,
   },
   {
@@ -42,8 +42,8 @@ const questions = [
     message: "Enter the git origin URL",
     initial: sharedState.gitOrigin ?? "",
     validate: sharedSchema.gitOrigin,
-    // Skip this prompt when git initialization is false
     skip() {
+      // Skip when git initialization is disabled.
       return !(this as unknown as { state: { answers: SharedState } }).state.answers?.git;
     },
   },
