@@ -4,6 +4,7 @@ import { tsState } from "@/state/ts.state.js";
 import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 import { tsSchema } from "@/schemas/ts.schema.js";
 import { ask } from "@/utils/ask.js";
+import { sharedState } from "@/state/shared.state.js";
 
 type TsQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
   name: keyof TsState;
@@ -28,51 +29,54 @@ const questions = [
     type: "confirm",
     name: "eslint",
     message: "Would you like to use ESLint?",
-    initial: tsState.eslint,
+    initial: true,
     validate: tsSchema.eslint,
   },
   {
     type: "confirm",
     name: "prettier",
     message: "Would you like to use Prettier?",
-    initial: tsState.prettier,
+    initial: true,
     validate: tsSchema.prettier,
   },
   {
     type: "confirm",
     name: "lintStaged",
     message: "Would you like to use lint-staged?",
-    initial: tsState.lintStaged,
+    initial: true,
     validate: tsSchema.lintStaged,
+    skip() {
+      // Skip when git is disabled.
+      return !sharedState.git;
+    },
   },
   {
     type: "confirm",
     name: "husky",
     message: "Would you like to use Husky?",
-    initial: tsState.husky,
+    initial: true,
     validate: tsSchema.husky,
+    skip() {
+      // Skip when git is disabled.
+      return !sharedState.git;
+    },
   },
   {
     type: "confirm",
     name: "commitLint",
     message: "Would you like to use commitlint?",
-    initial: tsState.commitLint,
+    initial: true,
     validate: tsSchema.commitLint,
-    // When husky is disabled, skip commitLint and force its value to false.
     skip() {
-      const isSkipped = !this.state?.answers?.husky;
-      if (isSkipped) {
-        const prompt = this as unknown as { value: boolean };
-        prompt.value = false;
-      }
-      return isSkipped;
+      // Skip when Husky is disabled or git is disabled.
+      return !this.state?.answers?.husky || !sharedState.git;
     },
   },
   {
     type: "confirm",
     name: "installDeps",
     message: "Would you like to install dependencies?",
-    initial: tsState.installDeps,
+    initial: true,
     validate: tsSchema.installDeps,
   },
 ] satisfies TsQuestion[];
