@@ -100,7 +100,7 @@ const editPackage = async (): Promise<void> => {
 
 export const packageInit = async (): Promise<void> => {
   // Implementation for initializing with package manager
-  logger.info("Initializing TypeScript project...");
+  logger.start("Initializing TypeScript project...");
   await run(PACKAGE_MANAGER_CMD[tsState.packageManager].initializer, [], {
     shell: true,
     stdio: "pipe",

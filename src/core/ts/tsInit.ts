@@ -11,7 +11,7 @@ STEPS:
 
 export const tsInit = async (): Promise<void> => {
   // Implementation for initializing TypeScript project
-  logger.info("Initializing TypeScript project...");
+  logger.start("Initializing TypeScript project...");
   await fs.copy(
     resolveTemplatePath("ts", "tsconfig.json"),
     path.join(process.cwd(), "tsconfig.json")

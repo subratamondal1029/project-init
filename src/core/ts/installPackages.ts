@@ -30,7 +30,7 @@ export const installPackages = async (): Promise<void> => {
   // Implementation for installing packages
   const filteredDependencies = filterDependencies();
 
-  logger.warn("Installing packages...");
+  logger.start("Installing packages...");
   await run(
     PACKAGE_MANAGER_CMD[tsState.packageManager].installer,
     ["-D", ...filteredDependencies],
