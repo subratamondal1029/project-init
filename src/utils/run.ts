@@ -16,7 +16,7 @@ export const run = async (
     shell: options?.shell ?? false,
     cwd: options?.cwd ?? process.cwd(),
     stdio: options?.stdio ?? "inherit",
-    timeout: options?.timeout ?? 10000,
+    timeout: options?.timeout ?? 30000,
   });
 
   return res;
