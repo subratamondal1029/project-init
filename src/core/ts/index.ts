@@ -30,8 +30,8 @@ export const tsProjectInit = async (): Promise<void> => {
     } else {
       logger.info("Skipping package installation.");
       const dependencies = filterDependencies();
-      logger.box(
-        `To install packages later, run \`${PACKAGE_MANAGER_CMD[tsState.packageManager].installer} ${dependencies.join(` `)}\``
+      logger.info(
+        `To install packages later:\n\n\`${PACKAGE_MANAGER_CMD[tsState.packageManager].installer} -D ${dependencies.join(` `)}\`\n`
       );
     }
 
