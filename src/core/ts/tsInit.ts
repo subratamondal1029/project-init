@@ -1,4 +1,5 @@
 import { logger } from "@/utils/logger.js";
+import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 import fs from "fs-extra";
 import path from "node:path";
 
@@ -11,8 +12,14 @@ STEPS:
 export const tsInit = async (): Promise<void> => {
   // Implementation for initializing TypeScript project
   logger.info("Initializing TypeScript project...");
-  await fs.copy("@/templates/ts/tsconfig.json", path.join(process.cwd(), "tsconfig.json"));
+  await fs.copy(
+    resolveTemplatePath("ts", "tsconfig.json"),
+    path.join(process.cwd(), "tsconfig.json")
+  );
   logger.info("tsconfig.json created.");
-  await fs.copy("@/templates/ts/src/index.ts", path.join(process.cwd(), "src/index.ts"));
+  await fs.copy(
+    resolveTemplatePath("ts", "src", "index.ts"),
+    path.join(process.cwd(), "src/index.ts")
+  );
   logger.info("src/index.ts created.");
 };

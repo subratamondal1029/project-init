@@ -10,6 +10,7 @@ import { run } from "@/utils/run.js";
 import { tsState, PACKAGE_MANAGER_CMD } from "@/state/ts.state.js";
 import path from "node:path";
 import { logger } from "@/utils/logger.js";
+import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 
 export const huskyInit = async (): Promise<void> => {
   // Implementation for initializing Husky
@@ -24,7 +25,7 @@ export const huskyInit = async (): Promise<void> => {
 
   if (tsState.commitLint) {
     await fs.copy(
-      "@/templates/commitlint/commitlint.config.ts",
+      resolveTemplatePath("commitlint", "commitlint.config.ts"),
       path.join(process.cwd(), "commitlint.config.ts")
     );
     await fs.outputFile(
