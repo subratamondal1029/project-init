@@ -5,7 +5,8 @@ import { logger } from "@/utils/logger.js";
 import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 
 type DependencyKey = keyof typeof tsState | "default";
-export const filterDependencies = (dependencies: Partial<Record<DependencyKey, string[]>>) => {
+export const filterDependencies = () => {
+  const dependencies = fs.readJsonSync(resolveTemplatePath("ts", "dependencies.json"));
   const filteredDependencies: string[] = [];
 
   for (const [tool, toolDependencies] of Object.entries(dependencies) as [
@@ -27,8 +28,7 @@ export const filterDependencies = (dependencies: Partial<Record<DependencyKey, s
 
 export const installPackages = async (): Promise<void> => {
   // Implementation for installing packages
-  const dependencies = await fs.readJson(resolveTemplatePath("ts", "dependencies.json"));
-  const filteredDependencies = filterDependencies(dependencies);
+  const filteredDependencies = filterDependencies();
 
   await run(PACKAGE_MANAGER_CMD[tsState.packageManager].installer, filteredDependencies);
   logger.success("Packages installed successfully.");
