@@ -1,0 +1,9 @@
+{
+    "eslint": ["eslint", "typescript-eslint", "@eslint/js"],
+    "prettier": ["prettier"],
+    "lintStaged": ["lint-staged"],
+    "husky": ["husky"],
+    "commitLint": ["@commitlint/cli", "@commitlint/config-conventional"],
+    "default": ["typescript", "tsc-alias", "tsx", "@types/node"]
+}
+
