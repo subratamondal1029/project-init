@@ -18,7 +18,7 @@ export const huskyInit = async (): Promise<void> => {
   await run(packageExec, ["husky", "init"], { shell: true });
 
   const preCommitCmd = tsState.lintStaged
-    ? `${tsState.packageManager} run lint:staged`
+    ? `${tsState.packageManager} run lint:stage`
     : "# Add your commands here that will be executed before each commit";
   await fs.outputFile(path.join(process.cwd(), ".husky", "pre-commit"), preCommitCmd);
   logger.success("Husky pre-commit hook initialized");
