@@ -106,5 +106,5 @@ export const packageInit = async (): Promise<void> => {
     stdio: "pipe",
   });
   await editPackage();
-  logger.info("package.json is ready.");
+  logger.success("package.json is ready.");
 };

@@ -16,10 +16,10 @@ export const tsInit = async (): Promise<void> => {
     resolveTemplatePath("ts", "tsconfig.json"),
     path.join(process.cwd(), "tsconfig.json")
   );
-  logger.info("tsconfig.json created.");
+  logger.success("tsconfig.json created.");
   await fs.copy(
     resolveTemplatePath("ts", "src", "index.ts"),
     path.join(process.cwd(), "src/index.ts")
   );
-  logger.info("src/index.ts created.");
+  logger.success("src/index.ts created.");
 };

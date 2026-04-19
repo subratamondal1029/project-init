@@ -11,7 +11,7 @@ export const initProject = async (): Promise<void> => {
     const projectPath = path.join(process.cwd(), sharedState.projectName);
     await createProjectDir(projectPath);
     process.chdir(projectPath);
-    logger.info("Project directory created.");
+    logger.success("Project directory created.");
     await gitInit();
   } catch (error) {
     throw new Error((error as Error)?.message || "Failed creating project", { cause: error });

@@ -33,7 +33,7 @@ export const gitInit = async (): Promise<void> => {
     // Implement git init here
     const branch = await getBranch();
     await run("git", ["init", "-b", branch], { stdio: "pipe" });
-    logger.info("Git repository initialized with branch: " + branch);
+    logger.success("Git repository initialized with branch: " + branch);
 
     if (!sharedState.gitOrigin || sharedState.gitOrigin === DEFAULT_GIT_ORIGIN) {
       logger.warn("No valid git origin provided.");
@@ -42,6 +42,6 @@ export const gitInit = async (): Promise<void> => {
 
     await verifyGitOrigin(sharedState.gitOrigin);
     await run("git", ["remote", "add", "origin", sharedState.gitOrigin], { stdio: "pipe" });
-    logger.info("Git remote added: origin");
+    logger.success("Git remote added: origin");
   }
 };
