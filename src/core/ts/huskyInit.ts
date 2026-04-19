@@ -7,13 +7,13 @@ STEPS:
 
 import fs from "fs-extra";
 import { run } from "@/utils/run.js";
-import { tsState, PACKAGE_MANAGER_EXEC } from "@/state/ts.state.js";
+import { tsState, PACKAGE_MANAGER_CMD } from "@/state/ts.state.js";
 import path from "node:path";
 import { logger } from "@/utils/logger.js";
 
 export const huskyInit = async (): Promise<void> => {
   // Implementation for initializing Husky
-  const packageExec = PACKAGE_MANAGER_EXEC[tsState.packageManager];
+  const packageExec = PACKAGE_MANAGER_CMD[tsState.packageManager].executer;
   await run(packageExec, ["husky", "init"]);
 
   const preCommitCmd = tsState.lintStaged

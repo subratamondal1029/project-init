@@ -1,6 +1,6 @@
 import { dependencies } from "@/templates/ts/dependencies.js";
 import { run } from "@/utils/run.js";
-import { tsState } from "@/state/ts.state.js";
+import { PACKAGE_MANAGER_CMD, tsState } from "@/state/ts.state.js";
 import { logger } from "@/utils/logger.js";
 
 type DependencyKey = keyof typeof tsState | "default";
@@ -28,6 +28,6 @@ export const installPackages = async (): Promise<void> => {
   // Implementation for installing packages
   const filteredDependencies = filterDependencies();
 
-  await run(tsState.packageManager, ["install", ...filteredDependencies]);
+  await run(PACKAGE_MANAGER_CMD[tsState.packageManager].installer, filteredDependencies);
   logger.success("Packages installed successfully.");
 };

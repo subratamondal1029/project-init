@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import { sharedState } from "@/state/shared.state.js";
-import { tsState } from "@/state/ts.state.js";
+import { PACKAGE_MANAGER_CMD, tsState } from "@/state/ts.state.js";
 import { run } from "@/utils/run.js";
 import { logger } from "@/utils/logger.js";
 
@@ -85,7 +85,7 @@ const editPackage = async (): Promise<void> => {
 export const packageInit = async (): Promise<void> => {
   // Implementation for initializing with package manager
   logger.info("Initializing TypeScript project...");
-  await run(tsState.packageManager, ["init", tsState.packageManager === "npm" ? "-y" : ""]);
+  await run(PACKAGE_MANAGER_CMD[tsState.packageManager].initializer);
   await editPackage();
   logger.info("package.json is ready.");
 };

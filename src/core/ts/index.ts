@@ -1,7 +1,7 @@
 import { logger } from "@/utils/logger.js";
 import { packageInit } from "./packageInit.js";
 import { tsInit } from "./tsInit.js";
-import { tsState } from "@/state/ts.state.js";
+import { PACKAGE_MANAGER_CMD, tsState } from "@/state/ts.state.js";
 import { eslintInit } from "./eslintInit.js";
 import { prettierInit } from "./prettierInit.js";
 import { huskyInit } from "./huskyInit.js";
@@ -31,7 +31,7 @@ export const tsProjectInit = async (): Promise<void> => {
       logger.info("Skipping package installation.");
       const dependencies = filterDependencies();
       logger.box(
-        `To install packages later, run \`${tsState.packageManager} install ${dependencies.join(` `)}\``
+        `To install packages later, run \`${PACKAGE_MANAGER_CMD[tsState.packageManager].installer} ${dependencies.join(` `)}\``
       );
     }
 

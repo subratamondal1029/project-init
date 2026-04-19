@@ -4,7 +4,7 @@ type StdioOption = ExecaOptions["stdio"];
 
 export const run = async (
   tool: string,
-  args: string[],
+  args?: string[],
   options?: {
     cwd?: string;
     stdio?: StdioOption;
