@@ -1,5 +1,5 @@
 import { logger } from "@/utils/logger.js";
-import { PACKAGE_MANAGER_CMD, tsState } from "@/state/ts.state.js";
+import { tsState } from "@/state/ts.state.js";
 import { sharedState } from "@/state/shared.state.js";
 import { initialCommit } from "@/core/common/initialCommit.js";
 import { packageInit } from "./packageInit.js";
@@ -7,7 +7,7 @@ import { tsInit } from "./tsInit.js";
 import { eslintInit } from "./eslintInit.js";
 import { prettierInit } from "./prettierInit.js";
 import { huskyInit } from "./huskyInit.js";
-import { filterDependencies, installPackages } from "./installPackages.js";
+import { installPackages } from "./installPackages.js";
 
 export const tsProjectInit = async (): Promise<void> => {
   try {
@@ -26,15 +26,7 @@ export const tsProjectInit = async (): Promise<void> => {
       await huskyInit();
     }
 
-    if (tsState.installDeps) {
-      await installPackages();
-    } else {
-      logger.info("Skipping package installation.");
-      const dependencies = filterDependencies();
-      logger.info(
-        `To install packages later:\n\n\`${PACKAGE_MANAGER_CMD[tsState.packageManager].installer} -D ${dependencies.join(` `)}\`\n`
-      );
-    }
+    await installPackages();
 
     if (sharedState.git) {
       await initialCommit();

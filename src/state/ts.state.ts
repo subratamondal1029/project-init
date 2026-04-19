@@ -7,17 +7,20 @@ export const PACKAGE_MANAGER_CMD: Record<
     initializer: string;
     installer: string;
     executer: string;
+    packageExtractFlags: string[];
   }
 > = {
   npm: {
     initializer: "npm init -y",
     installer: "npm install",
     executer: "npx",
+    packageExtractFlags: ["--package-lock-only"],
   },
   pnpm: {
     initializer: "pnpm init",
-    installer: "pnpm add",
+    installer: "pnpm install",
     executer: "pnpm dlx",
+    packageExtractFlags: ["--lockfile-only"],
   },
 } as const;
 
