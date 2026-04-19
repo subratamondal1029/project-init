@@ -1,4 +1,5 @@
-import { AVAILABLE_LANGUAGE, AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
+import { AVAILABLE_LANGUAGE } from "@/constants.js";
+import { PACKAGE_MANAGERS } from "@/state/ts.state.js";
 
 export type SharedState = {
   language: (typeof AVAILABLE_LANGUAGE)[number]["code"];
@@ -8,7 +9,7 @@ export type SharedState = {
 };
 
 export type TsState = {
-  packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
+  packageManager: (typeof PACKAGE_MANAGERS)[number];
   eslint: boolean;
   prettier: boolean;
   lintStaged: boolean;

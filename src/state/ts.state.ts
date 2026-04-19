@@ -1,14 +1,29 @@
 import type { TsState as State } from "@/types/state.type.js";
-import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
 
-export const PACKAGE_MANAGER_EXEC: Record<(typeof AVAILABLE_PACKAGE_MANAGERS)[number], string> = {
-  pnpm: "pnpm dlx",
-  npm: "npx",
+export const PACKAGE_MANAGERS = ["npm", "pnpm"] as const;
+export const PACKAGE_MANAGER_CMD: Record<
+  (typeof PACKAGE_MANAGERS)[number],
+  {
+    initializer: string;
+    installer: string;
+    executer: string;
+  }
+> = {
+  npm: {
+    initializer: "npm init -y",
+    installer: "npm install",
+    executer: "npx",
+  },
+  pnpm: {
+    initializer: "pnpm init",
+    installer: "pnpm add",
+    executer: "pnpm dlx",
+  },
 } as const;
 
 // store typescript questions answers with default value
 class TsState implements State {
-  public packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
+  public packageManager: (typeof PACKAGE_MANAGERS)[number];
   public eslint: boolean;
   public prettier: boolean;
   public lintStaged: boolean;

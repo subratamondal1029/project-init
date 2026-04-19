@@ -1,7 +1,6 @@
 import { type Prompt } from "enquirer";
 import type { TsState } from "@/types/state.type.js";
-import { tsState } from "@/state/ts.state.js";
-import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
+import { tsState, PACKAGE_MANAGERS } from "@/state/ts.state.js";
 import { tsSchema } from "@/schemas/ts.schema.js";
 import { ask } from "@/utils/ask.js";
 import { sharedState } from "@/state/shared.state.js";
@@ -17,7 +16,7 @@ const questions = [
     type: "select",
     name: "packageManager",
     message: "Which package manager would you like to use?",
-    choices: AVAILABLE_PACKAGE_MANAGERS.map((pack) => ({
+    choices: PACKAGE_MANAGERS.map((pack) => ({
       name: pack,
       message: pack,
       value: pack,
