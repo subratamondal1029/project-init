@@ -15,7 +15,7 @@ import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 export const huskyInit = async (): Promise<void> => {
   // Implementation for initializing Husky
   const packageExec = PACKAGE_MANAGER_CMD[tsState.packageManager].executer;
-  await run(packageExec, ["husky", "init"]);
+  await run(packageExec, ["husky", "init"], { shell: true });
 
   const preCommitCmd = tsState.lintStaged
     ? `${tsState.packageManager} run lint:staged`

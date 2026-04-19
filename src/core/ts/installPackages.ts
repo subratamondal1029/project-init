@@ -30,6 +30,8 @@ export const installPackages = async (): Promise<void> => {
   // Implementation for installing packages
   const filteredDependencies = filterDependencies();
 
-  await run(PACKAGE_MANAGER_CMD[tsState.packageManager].installer, filteredDependencies);
+  await run(PACKAGE_MANAGER_CMD[tsState.packageManager].installer, filteredDependencies, {
+    shell: true,
+  });
   logger.success("Packages installed successfully.");
 };
