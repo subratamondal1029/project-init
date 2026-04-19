@@ -1,8 +1,11 @@
 import { sharedState, DEFAULT_GIT_ORIGIN } from "@/state/shared.state.js";
 import { ask } from "@/utils/ask.js";
 import { logger } from "@/utils/logger.js";
+import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 import { run } from "@/utils/run.js";
 import { ExecaError } from "execa";
+import fs from "fs-extra";
+import path from "node:path";
 
 const getBranch = async () => {
   const answers = (await ask([
@@ -34,6 +37,11 @@ export const gitInit = async (): Promise<void> => {
     const branch = await getBranch();
     await run("git", ["init", "-b", branch], { stdio: "pipe" });
     logger.success("Git repository initialized with branch: " + branch);
+
+    await fs.copy(
+      resolveTemplatePath("git", "ts", ".gitignore"),
+      path.join(process.cwd(), ".gitignore")
+    );
 
     if (!sharedState.gitOrigin || sharedState.gitOrigin === DEFAULT_GIT_ORIGIN) {
       logger.warn("No valid git origin provided.");
