@@ -6,6 +6,14 @@ import { selectLanguage } from "@/utils/selectLanguage.js";
 import { logger } from "@/utils/logger.js";
 import { initProject } from "@/core/index.js";
 
+process.on("uncaughtException", (error) => {
+  if (error instanceof Error && "code" in error && error.code === "ERR_USE_AFTER_CLOSE") {
+    process.exit(0);
+  }
+  logger.error(error);
+  process.exit(1);
+});
+
 showWelcome();
 
 (async () => {
