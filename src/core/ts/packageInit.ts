@@ -5,8 +5,8 @@ import { run } from "@/utils/run.js";
 import { logger } from "@/utils/logger.js";
 
 // Templates
-import scripts from "@/templates/ts/package.scripts.js";
 import path from "node:path";
+import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 
 /*
 STEPS:
@@ -14,8 +14,23 @@ STEPS:
 2. edit package.json with project info (npm pkg set / JSON merge)
 */
 
+type Scripts = {
+  dev: string;
+  start: string;
+  build: string;
+  "type:check": string;
+  "format:check": string;
+  "format:write": string;
+  "lint:check": string;
+  "lint:fix": string;
+  "lint:stage": string;
+  prepare: string;
+};
+
 const filterScripts = () => {
-  const newScripts: Partial<typeof scripts> = {
+  const scripts = fs.readJsonSync(resolveTemplatePath("ts", "scripts.json")) as Scripts;
+
+  const newScripts: Partial<Scripts> = {
     dev: scripts.dev,
     build: scripts.build,
     start: scripts.start,
@@ -44,14 +59,15 @@ const filterScripts = () => {
 const getLintStaged = async () => {
   if (sharedState.git && tsState.lintStaged) {
     let lintStage: Record<string, string[]> = {};
+    const { eslint: eslintConfig, prettier: prettierConfig } = await fs.readJson(
+      resolveTemplatePath("lint-staged", "config.json")
+    );
 
     if (tsState.eslint) {
-      const eslintConfig = (await import("@/templates/lint-staged/eslint.js")).default;
       lintStage = { ...lintStage, ...eslintConfig };
     }
 
     if (tsState.prettier) {
-      const prettierConfig = (await import("@/templates/lint-staged/prettier.js")).default;
       lintStage = { ...lintStage, ...prettierConfig };
     }
 
@@ -63,7 +79,7 @@ const editPackage = async (): Promise<void> => {
   // const filteredScripts = filterScripts();
   try {
     const packagePath = path.join(process.cwd(), "package.json");
-    const pak = JSON.parse(await fs.readFile(packagePath, "utf8"));
+    const pak = await fs.readJson(packagePath);
 
     pak.name = sharedState.projectName;
     pak.main = "src/index.ts";
@@ -76,7 +92,7 @@ const editPackage = async (): Promise<void> => {
       pak["lint-staged"] = listStagedConfig;
     }
 
-    await fs.writeFile(packagePath, JSON.stringify(pak, null, 2));
+    await fs.writeJson(packagePath, pak, { spaces: 2 });
   } catch (error) {
     throw new Error("Failed to edit package.json", { cause: error });
   }
