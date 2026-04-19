@@ -7,4 +7,5 @@ const _dirname = path.dirname(fileURLToPath(import.meta.url))
 const templatePath = path.resolve(_dirname, "../src/templates")
 const destinationPath = path.resolve(_dirname, "../dist/templates")
 
+fs.removeSync(destinationPath)
 fs.copySync(templatePath, destinationPath);
