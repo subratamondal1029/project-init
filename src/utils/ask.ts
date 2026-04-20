@@ -1,4 +1,4 @@
-import Enquirer, { Prompt } from "enquirer";
+import Enquirer, { type Prompt } from "enquirer";
 
 function result(this: { skipped?: boolean; type: string }, value: string) {
   return (this.type === "confirm" && this.skipped ? false : value) as unknown as string;
