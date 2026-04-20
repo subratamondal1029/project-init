@@ -14,8 +14,9 @@ import { resolveTemplatePath } from "@/utils/resolveTemplatePath.js";
 
 export const huskyInit = async (): Promise<void> => {
   // Implementation for initializing Husky
-  const packageExec = PACKAGE_MANAGER_CMD[tsState.packageManager].executer;
-  await run(packageExec, ["husky", "init"], { shell: true });
+  await run(PACKAGE_MANAGER_CMD[tsState.packageManager].executer, ["husky", "init"], {
+    shell: true,
+  });
 
   const preCommitCmd = tsState.lintStaged
     ? `${tsState.packageManager} run lint:stage`
@@ -28,10 +29,7 @@ export const huskyInit = async (): Promise<void> => {
       resolveTemplatePath("commitlint", "commitlint.config.ts"),
       path.join(process.cwd(), "commitlint.config.ts")
     );
-    await fs.outputFile(
-      path.join(process.cwd(), ".husky", "commit-msg"),
-      `${packageExec} commitlint --edit "$1"`
-    );
+    await fs.outputFile(path.join(process.cwd(), ".husky", "commit-msg"), `commitlint --edit "$1"`);
     logger.success("Husky commitlint initialized");
   }
 };
