@@ -34,8 +34,6 @@ export const tsProjectInit = async (): Promise<void> => {
 
     logger.success("Everything is set up! Now you can start coding.");
   } catch (error) {
-    logger.error("Error occurred while initializing TypeScript project");
-    logger.error.raw(error);
-    process.exit(1);
+    throw new Error("Error occurred while initializing TypeScript project", { cause: error });
   }
 };
