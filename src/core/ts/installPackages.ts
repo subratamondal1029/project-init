@@ -39,9 +39,15 @@ export const installPackages = async (): Promise<void> => {
       timeout: 0,
     });
     logger.success("Packages installed successfully.");
+    logger.box({
+      title: `\x1b[1m\x1b[32m Next step \x1b[0m`,
+      message: `\x1b[2mMove into your project directory:\x1b[0m\n\n\x1b[1m\x1b[36mcd ${sharedState.projectName}\x1b[0m`,
+    });
   } else {
+    logger.start("Resolving dependency versions...");
     await run(pakCmd.installer, ["-D", ...filteredDependencies, ...pakCmd.packageExtractFlags], {
       shell: true,
+      stdio: "pipe",
       timeout: 0,
     });
 
