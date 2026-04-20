@@ -76,13 +76,12 @@ const getLintStaged = async () => {
 };
 
 const editPackage = async (): Promise<void> => {
-  // const filteredScripts = filterScripts();
   try {
     const packagePath = path.join(process.cwd(), "package.json");
     const pak = await fs.readJson(packagePath);
 
     pak.name = sharedState.projectName;
-    pak.main = "src/index.ts";
+    pak.main = "dist/index.js";
     pak.type = "module";
     pak.scripts = filterScripts();
 
