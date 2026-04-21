@@ -6,3 +6,5 @@ export const AVAILABLE_LANGUAGE = [
     name: "TypeScript",
   },
 ] as const;
+
+export const TS_PACKAGE_MANGERS = ["npm", "pnpm"] as const;
