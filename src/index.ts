@@ -23,7 +23,7 @@ showWelcome();
     const sharedAnswers = await getSharedAnswers();
     const { screen: langScreen, init: langInit } = selectLanguage(sharedAnswers.language);
 
-    if (!langScreen) {
+    if (!langScreen || !langInit) {
       logger.error(`Unsupported language: ${sharedAnswers.language}`);
       process.exit(1);
     }

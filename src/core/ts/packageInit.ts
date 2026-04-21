@@ -57,38 +57,30 @@ const filterScripts = () => {
 };
 
 const getLintStaged = async () => {
-  if (sharedState.git && tsState.lintStaged) {
-    let lintStage: Record<string, string[]> = {};
-    const { eslint: eslintConfig, prettier: prettierConfig } = await fs.readJson(
-      resolveTemplatePath("lint-staged", "config.json")
-    );
-
-    if (tsState.eslint) {
-      lintStage = { ...lintStage, ...eslintConfig };
-    }
-
-    if (tsState.prettier) {
-      lintStage = { ...lintStage, ...prettierConfig };
-    }
-
-    return lintStage;
-  }
+  if (!(sharedState.git && tsState.lintStaged)) return;
+  if (!tsState.eslint && !tsState.prettier) return;
+  let lintStage: Record<string, string[]> = {};
+  const { eslint: eslintConfig, prettier: prettierConfig } = await fs.readJson(
+    resolveTemplatePath("lint-staged", "config.json")
+  );
+  if (tsState.eslint) lintStage = { ...lintStage, ...eslintConfig };
+  if (tsState.prettier) lintStage = { ...lintStage, ...prettierConfig };
+  return lintStage;
 };
 
 const editPackage = async (): Promise<void> => {
   try {
     const packagePath = path.join(process.cwd(), "package.json");
     const pak = await fs.readJson(packagePath);
-
     pak.name = sharedState.projectName;
     pak.main = "dist/index.js";
     pak.type = "module";
     pak.scripts = filterScripts();
-
-    const listStagedConfig = await getLintStaged();
-
-    if (listStagedConfig) {
-      pak["lint-staged"] = listStagedConfig;
+    const lintStagedConfig = await getLintStaged();
+    if (lintStagedConfig) {
+      pak["lint-staged"] = lintStagedConfig;
+    } else {
+      logger.warn("No lint-staged configuration found.");
     }
 
     await fs.writeJson(packagePath, pak, { spaces: 2 });
