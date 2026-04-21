@@ -1,9 +1,32 @@
 import type { TsState as State } from "@/types/state.type.js";
-import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
+import { TS_PACKAGE_MANGERS } from "@/constants.js";
+
+export const PACKAGE_MANAGER_CMD: Record<
+  (typeof TS_PACKAGE_MANGERS)[number],
+  {
+    initializer: string;
+    installer: string;
+    executer: string;
+    packageExtractFlags: string[];
+  }
+> = {
+  npm: {
+    initializer: "npm init -y",
+    installer: "npm install",
+    executer: "npx",
+    packageExtractFlags: ["--package-lock-only"],
+  },
+  pnpm: {
+    initializer: "pnpm init",
+    installer: "pnpm install",
+    executer: "pnpm dlx",
+    packageExtractFlags: ["--lockfile-only"],
+  },
+} as const;
 
 // store typescript questions answers with default value
 class TsState implements State {
-  public packageManager: (typeof AVAILABLE_PACKAGE_MANAGERS)[number];
+  public packageManager: (typeof TS_PACKAGE_MANGERS)[number];
   public eslint: boolean;
   public prettier: boolean;
   public lintStaged: boolean;

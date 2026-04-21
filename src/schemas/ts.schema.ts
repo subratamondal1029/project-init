@@ -1,7 +1,7 @@
 import type { TsState } from "@/types/state.type.js";
 import { validator } from "./index.js";
 import { booleanSchema } from "./shared.schema.js";
-import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
+import { TS_PACKAGE_MANGERS } from "@/constants.js";
 import { z } from "zod";
 
 export const tsSchema: Record<keyof TsState, (value: unknown) => boolean | string> = {
@@ -14,8 +14,8 @@ export const tsSchema: Record<keyof TsState, (value: unknown) => boolean | strin
     z
       .string()
       .refine(
-        (v): v is (typeof AVAILABLE_PACKAGE_MANAGERS)[number] =>
-          AVAILABLE_PACKAGE_MANAGERS.includes(v as (typeof AVAILABLE_PACKAGE_MANAGERS)[number]),
+        (v): v is (typeof TS_PACKAGE_MANGERS)[number] =>
+          TS_PACKAGE_MANGERS.includes(v as (typeof TS_PACKAGE_MANGERS)[number]),
         { message: "Invalid package manager" }
       )
   ),

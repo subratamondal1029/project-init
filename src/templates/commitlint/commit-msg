@@ -1,2 +1,0 @@
-pnpm dlx or npx based on PACKAGE_MANAGER
-{{PACKAGE_MANAGER_RUN}} commitlint --edit "$1"

@@ -1,0 +1,39 @@
+import { logger } from "@/utils/logger.js";
+import { tsState } from "@/state/ts.state.js";
+import { sharedState } from "@/state/shared.state.js";
+import { initialCommit } from "@/core/common/initialCommit.js";
+import { packageInit } from "./packageInit.js";
+import { tsInit } from "./tsInit.js";
+import { eslintInit } from "./eslintInit.js";
+import { prettierInit } from "./prettierInit.js";
+import { huskyInit } from "./huskyInit.js";
+import { installPackages } from "./installPackages.js";
+
+export const tsProjectInit = async (): Promise<void> => {
+  try {
+    await packageInit();
+    await tsInit();
+
+    if (tsState.eslint) {
+      await eslintInit();
+    }
+
+    if (tsState.prettier) {
+      await prettierInit();
+    }
+
+    if (sharedState.git && tsState.husky) {
+      await huskyInit();
+    }
+
+    await installPackages();
+
+    if (sharedState.git) {
+      await initialCommit();
+    }
+
+    logger.success("Everything is set up! Now you can start coding.");
+  } catch (error) {
+    throw new Error("Error occurred while initializing TypeScript project", { cause: error });
+  }
+};

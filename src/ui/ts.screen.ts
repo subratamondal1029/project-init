@@ -1,8 +1,9 @@
-import Enquirer, { type Prompt } from "enquirer";
+import { type Prompt } from "enquirer";
 import type { TsState } from "@/types/state.type.js";
 import { tsState } from "@/state/ts.state.js";
-import { AVAILABLE_PACKAGE_MANAGERS } from "@/constants.js";
+import { TS_PACKAGE_MANGERS } from "@/constants.js";
 import { tsSchema } from "@/schemas/ts.schema.js";
+import { ask } from "@/utils/ask.js";
 import { sharedState } from "@/state/shared.state.js";
 
 type TsQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
@@ -16,7 +17,7 @@ const questions = [
     type: "select",
     name: "packageManager",
     message: "Which package manager would you like to use?",
-    choices: AVAILABLE_PACKAGE_MANAGERS.map((pack) => ({
+    choices: TS_PACKAGE_MANGERS.map((pack) => ({
       name: pack,
       message: pack,
       value: pack,
@@ -81,8 +82,7 @@ const questions = [
 ] satisfies TsQuestion[];
 
 export const getTsAnswers = async (): Promise<TsState> => {
-  const enquirer = new Enquirer<TsState>();
-  const answers = await enquirer.prompt(questions);
+  const answers = (await ask(questions)) as TsState;
   tsState.setValues(answers);
   return answers;
 };

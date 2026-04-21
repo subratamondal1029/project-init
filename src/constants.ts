@@ -7,4 +7,4 @@ export const AVAILABLE_LANGUAGE = [
   },
 ] as const;
 
-export const AVAILABLE_PACKAGE_MANAGERS = ["npm", "pnpm"] as const;
+export const TS_PACKAGE_MANGERS = ["npm", "pnpm"] as const;
