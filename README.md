@@ -93,7 +93,7 @@ Then follow the interactive prompts.
 - Add more language presets over time
 
 ## Note
-> Made for own use you can customize for yours also
+> Made for personal use; feel free to customize it for your own needs.
 
 ## License
 
