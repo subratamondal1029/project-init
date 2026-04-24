@@ -20,8 +20,10 @@ jobs:
           REMOTE=$(npm view @subrata/project-init version 2>/dev/null || echo "0.0.0")
           if [ "$LOCAL" = "$REMOTE" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Version has not changed."
           else
             echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Version has changed $REMOTE to $LOCAL"
           fi
 
   quality:
@@ -52,6 +54,9 @@ jobs:
   publish:
     name: Publish to npm
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     needs: [version_check, quality]
     if: needs.version_check.outputs.skip == 'false'
     steps:
@@ -67,6 +72,4 @@ jobs:
           cache: "pnpm"
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm publish --no-git-checks --provenance
