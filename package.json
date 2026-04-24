@@ -11,6 +11,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subratamondal1029/project-init.git"
+  },
+  "homepage": "https://github.com/subratamondal1029/project-init#readme",
+  "bugs": {
+    "url": "https://github.com/subratamondal1029/project-init/issues"
+  },
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"tsc-alias -w --resolve-full-paths --resolve-full-extension .js\"",
     "start": "node dist/index.js",
