@@ -1,16 +1,21 @@
 {
-  "name": "project-init",
+  "name": "@subrata/project-init",
   "version": "1.0.0",
   "description": "Project initializer for my projects with initial configs",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "type": "module",
+  "files": ["dist"],
   "bin": {
     "project-init": "dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "dev": "concurrently \"tsc -w\" \"tsc-alias -w --resolve-full-paths --resolve-full-extension .js\"",
     "start": "node dist/index.js",
     "build": "tsc && tsc-alias --resolve-full-paths --resolve-full-extension .js && pnpm run template:copy",
+    "prepublishOnly": "pnpm run build",
     "template:copy": "node scripts/copyTemplates.mjs",
     "type:check": "tsc --noEmit",
     "format:check": "prettier --check \"src\"",
@@ -18,7 +23,7 @@
     "lint:check": "eslint src",
     "lint:fix": "eslint src --fix",
     "lint:stage": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "keywords": [
     "project",
