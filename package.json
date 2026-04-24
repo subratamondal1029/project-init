@@ -1,5 +1,5 @@
 {
-  "name": "@subrata/project-init",
+  "name": "@subratamondal/project-init",
   "version": "1.0.0",
   "description": "Project initializer for my projects with initial configs",
   "main": "dist/index.js",
