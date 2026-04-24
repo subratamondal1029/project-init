@@ -1,4 +1,4 @@
-name: Publish to npmjs
+name: Publish to npm
 
 on:
   push:
@@ -6,9 +6,29 @@ on:
       - main
 
 jobs:
+  version_check:
+    name: Check Version Changed
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare versions
+        id: check
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          REMOTE=$(npm view @subrata/project-init version 2>/dev/null || echo "0.0.0")
+          if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
   quality:
     name: Code Quality
     runs-on: ubuntu-latest
+    needs: version_check
+    if: needs.version_check.outputs.skip == 'false'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -19,7 +39,7 @@ jobs:
           node-version: 22
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
-      
+
       - name: Type Check
         run: pnpm type:check
 
@@ -30,29 +50,23 @@ jobs:
         run: pnpm format:check
 
   publish:
+    name: Publish to npm
     runs-on: ubuntu-latest
-    needs: quality
-  
+    needs: [version_check, quality]
+    if: needs.version_check.outputs.skip == 'false'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 10.33.0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Publish
-        run: pnpm publish --no-git-checks
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
