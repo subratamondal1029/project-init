@@ -56,6 +56,12 @@ Conditionally generated:
 
 ## Installation
 
+### Using npm
+```bash
+npm install -g @subratamondal/project-init
+```
+> [visit package page](https://www.npmjs.com/package/@subratamondal/project-init)
+
 ### Build from source
 
 ```bash
