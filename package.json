@@ -1,10 +1,12 @@
 {
   "name": "@subratamondal/project-init",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Project initializer for my projects with initial configs",
   "main": "dist/index.js",
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "bin": {
     "project-init": "dist/index.js"
   },
