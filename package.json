@@ -68,6 +68,7 @@
     "typescript-eslint": "^8.58.2"
   },
   "dependencies": {
+    "commander": "^14.0.3",
     "consola": "^3.4.2",
     "enquirer": "^2.4.1",
     "execa": "^9.6.1",
