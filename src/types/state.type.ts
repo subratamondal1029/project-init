@@ -5,6 +5,7 @@ export type SharedState = {
   projectName: string;
   git: boolean;
   gitOrigin?: string;
+  skipConfirm: boolean;
 };
 
 export type TsState = {

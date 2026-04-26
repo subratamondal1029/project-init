@@ -9,12 +9,18 @@ class SharedState implements State {
   public projectName: string;
   public git: boolean;
   public gitOrigin?: string;
+  public skipConfirm: boolean;
 
   constructor() {
     this.language = "TS";
     this.projectName = "my-project";
     this.git = false;
+    this.skipConfirm = false;
     this.gitOrigin = DEFAULT_GIT_ORIGIN;
+  }
+
+  setSkipConfirm(skipConfirm: boolean) {
+    this.skipConfirm = skipConfirm;
   }
 
   setValues(answers: Partial<State>) {
