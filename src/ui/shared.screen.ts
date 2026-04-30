@@ -36,6 +36,7 @@ const questions = [
     message: "Initialize git repository?",
     initial: true,
     validate: sharedSchema.git,
+    // skip: sharedState.skipConfirm ?? false,
   },
   {
     name: "gitOrigin",
@@ -45,6 +46,7 @@ const questions = [
     validate: sharedSchema.gitOrigin,
     skip() {
       // Skip when git initialization is disabled.
+      // FIXME: show conditionally for skip confirm
       return !(this as unknown as { state: { answers: SharedState } }).state.answers?.git;
     },
   },
