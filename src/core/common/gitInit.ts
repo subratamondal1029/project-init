@@ -39,7 +39,7 @@ export const gitInit = async (): Promise<void> => {
     logger.success("Git repository initialized with branch: " + branch);
 
     await fs.copy(
-      resolveTemplatePath("git", "ts", ".gitignore"),
+      resolveTemplatePath("git", "ts", ".gitignore.template"),
       path.join(process.cwd(), ".gitignore")
     );
 
