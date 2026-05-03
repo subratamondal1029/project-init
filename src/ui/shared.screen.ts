@@ -48,7 +48,8 @@ const questions = [
       // Skip when git initialization is disabled.
       return customSkip.call(
         this,
-        !(this as unknown as { state: { answers: SharedState } }).state.answers?.git
+        !(this as unknown as { state: { answers: SharedState } }).state.answers?.git,
+        ""
       );
     },
   },
