@@ -3,7 +3,7 @@ import type { SharedState } from "@/types/state.type.js";
 import { sharedState } from "@/state/shared.state.js";
 import { AVAILABLE_LANGUAGE } from "@/constants.js";
 import { sharedSchema } from "@/schemas/shared.schema.js";
-import { ask } from "@/utils/ask.js";
+import { ask, customSkip } from "@/utils/ask.js";
 
 type SharedQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
   name: keyof SharedState;
@@ -46,8 +46,10 @@ const questions = [
     validate: sharedSchema.gitOrigin,
     skip() {
       // Skip when git initialization is disabled.
-      // FIXME: show conditionally for skip confirm
-      return !(this as unknown as { state: { answers: SharedState } }).state.answers?.git;
+      return customSkip.call(
+        this,
+        !(this as unknown as { state: { answers: SharedState } }).state.answers?.git
+      );
     },
   },
 ] satisfies SharedQuestion[];

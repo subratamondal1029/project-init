@@ -93,6 +93,24 @@ Then follow the interactive prompts.
 5. Let project-init scaffold files and scripts
 6. Start coding
 
+## CLI Arguments
+
+project-init supports the following command-line arguments:
+
+- -h, --help
+	- Show help and exit.
+- -V, --version
+	- Print the tool version and exit.
+- -y, --yes
+	- Skip confirmation prompts and fast-forward project initialization (assume defaults).
+
+Example:
+
+```bash
+project-init -y
+```
+
+
 ## Roadmap
 
 - Add Python project templates and toolchain setup

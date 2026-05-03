@@ -3,7 +3,7 @@ import type { TsState } from "@/types/state.type.js";
 import { tsState } from "@/state/ts.state.js";
 import { TS_PACKAGE_MANGERS } from "@/constants.js";
 import { tsSchema } from "@/schemas/ts.schema.js";
-import { ask } from "@/utils/ask.js";
+import { ask, customSkip } from "@/utils/ask.js";
 import { sharedState } from "@/state/shared.state.js";
 
 type TsQuestion = NonNullable<ConstructorParameters<typeof Prompt>[0]> & {
@@ -47,7 +47,7 @@ const questions = [
     validate: tsSchema.lintStaged,
     skip() {
       // Skip when git is disabled.
-      return !sharedState.git;
+      return customSkip.call(this, !sharedState.git);
     },
   },
   {
@@ -58,7 +58,7 @@ const questions = [
     validate: tsSchema.husky,
     skip() {
       // Skip when git is disabled.
-      return !sharedState.git;
+      return customSkip.call(this, !sharedState.git);
     },
   },
   {
@@ -69,7 +69,7 @@ const questions = [
     validate: tsSchema.commitLint,
     skip() {
       // Skip when Husky is disabled or git is disabled.
-      return !this.state?.answers?.husky || !sharedState.git;
+      return customSkip.call(this, !this.state?.answers?.husky || !sharedState.git);
     },
   },
   {

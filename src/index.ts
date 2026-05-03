@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import "@/utils/args.js";
 import { showWelcome } from "@/ui/welcome.screen.js";
 import { showThanks } from "@/ui/thanks.screen.js";
 import { getSharedAnswers } from "@/ui/shared.screen.js";
