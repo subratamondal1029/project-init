@@ -9,5 +9,5 @@ export const sharedSchema: Record<keyof SharedState, (value: unknown) => boolean
   projectName: validator(z.string().min(2).max(100)),
   git: booleanSchema,
   gitOrigin: validator(z.string().min(2).max(200).optional()),
-  skipConfirm: validator(z.boolean().optional()),
+  skipConfirm: validator(z.boolean()),
 };
