@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
+      version: ${{ steps.check.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - name: Compare versions
@@ -23,6 +24,7 @@ jobs:
             echo "Version has not changed."
           else
             echo "skip=false" >> $GITHUB_OUTPUT
+            echo "version=$LOCAL" >> $GITHUB_OUTPUT
             echo "Version has changed $REMOTE to $LOCAL"
           fi
 
