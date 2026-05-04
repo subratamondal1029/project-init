@@ -55,12 +55,25 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Get PR body
+        id: pr
+        run: |
+          PR_BODY=$(gh pr list --base test/ci-release-job --state merged --limit 1 --json body -q '.[0].body')
+          if [ -z "$PR_BODY" ]; then
+            PR_BODY="This is a new version (v${{ needs.version_check.outputs.version }})"
+          fi
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$PR_BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.version_check.outputs.version }}
           name: v${{ needs.version_check.outputs.version }}
-          body: "This is a new version (v${{ needs.version_check.outputs.version }})"
+          body: ${{ needs.pr.outputs.body }}
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
