@@ -51,13 +51,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [version_check, quality, publish]
     if: needs.version_check.outputs.skip == 'false'
+    permissions:
+      contents: write
     steps:
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.version_check.outputs.version }}
-          release_name: v${{ steps.version_check.outputs.version }}
+          tag_name: v${{ needs.version_check.outputs.version }}
+          release_name: v${{ needs.version_check.outputs.version }}
           body: ${{ github.event.pull_request.body }}
           draft: true
