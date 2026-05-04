@@ -59,7 +59,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.version_check.outputs.version }}
-          release_name: v${{ needs.version_check.outputs.version }}
+          name: v${{ needs.version_check.outputs.version }}
           body: "This is a new version (v${{ needs.version_check.outputs.version }})"
           draft: true
         env:
