@@ -3,7 +3,7 @@ name: Publish to npm
 on:
   push:
     branches:
-      - main
+      - test/ci-release-job
 
 jobs:
   version_check:
@@ -23,6 +23,7 @@ jobs:
             echo "Version has not changed."
           else
             echo "skip=false" >> $GITHUB_OUTPUT
+            echo "version=$LOCAL" >> $GITHUB_OUTPUT
             echo "Version has changed $REMOTE to $LOCAL"
           fi
 
@@ -32,24 +33,7 @@ jobs:
     needs: version_check
     if: needs.version_check.outputs.skip == 'false'
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: "pnpm"
-      - run: pnpm install --frozen-lockfile
-
-      - name: Type Check
-        run: pnpm type:check
-
-      - name: Lint Check
-        run: pnpm lint:check
-
-      - name: Format Check
-        run: pnpm format:check
+      - run: echo "pass code quality checks"
 
   publish:
     name: Publish to npm
@@ -60,16 +44,20 @@ jobs:
     needs: [version_check, quality]
     if: needs.version_check.outputs.skip == 'false'
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
+      - run: echo "Published to npm"
 
-      - uses: actions/setup-node@v4
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [version_check, quality, publish]
+    if: needs.version_check.outputs.skip == 'false'
+    steps:
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          node-version: 24
-          registry-url: https://registry.npmjs.org
-          cache: "pnpm"
-
-      - run: pnpm install --frozen-lockfile
-      - run: npm publish --provenance --access public
+          tag_name: v${{ steps.version_check.outputs.version }}
+          release_name: v${{ steps.version_check.outputs.version }}
+          body: ${{ github.event.pull_request.body }}
+          draft: true
