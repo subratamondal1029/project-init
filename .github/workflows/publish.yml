@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip: ${{ steps.check.outputs.skip }}
+      version: ${{ steps.check.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - name: Compare versions
@@ -55,11 +56,11 @@ jobs:
       contents: write
     steps:
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ needs.version_check.outputs.version }}
           release_name: v${{ needs.version_check.outputs.version }}
-          body: ${{ github.event.pull_request.body }}
+          body: "This is a new version (v${{ needs.version_check.outputs.version }})"
           draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
