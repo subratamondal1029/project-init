@@ -20,14 +20,18 @@ const getTheme = (type: UpdateInfo["type"]) => {
   return versionTheme.default;
 };
 
-const notifier = updateNotifier({
-  pkg: pak,
-  updateCheckInterval: 1000 * 60 * 60 * 12,
-});
-
-if (notifier.update) {
-  logger.box({
-    title: `\x1b[1m\x1b[33m Update Available \x1b[0m`,
-    message: `${getTheme(notifier.update.type)}${notifier.update.current}${versionTheme.reset} \x1b[2m→\x1b[0m \x1b[32m${notifier.update.latest}\x1b[0m\n\n\x1b[2mRun:\x1b[0m\x1b[1m\x1b[36m npm i -g ${pak.name}\x1b[0m`,
+try {
+  const notifier = updateNotifier({
+    pkg: pak,
+    updateCheckInterval: 1000 * 60 * 60 * 12,
   });
+
+  if (notifier.update) {
+    logger.box({
+      title: `\x1b[1m\x1b[33m Update Available \x1b[0m`,
+      message: `${getTheme(notifier.update.type)}${notifier.update.current}${versionTheme.reset} \x1b[2m→\x1b[0m \x1b[32m${notifier.update.latest}\x1b[0m\n\n\x1b[2mRun:\x1b[0m\x1b[1m\x1b[36m npm i -g ${pak.name}\x1b[0m`,
+    });
+  }
+} catch (error) {
+  logger.debug("Update check skipped.", error);
 }
