@@ -20,7 +20,7 @@ Planned support: Python
 npm i -g @subratamondal/project-init
 project-init
 ```
-			OR
+OR
 ```bash
 npx @subratamondal/project-init
 ```
