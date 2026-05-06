@@ -16,6 +16,15 @@ Current support: TypeScript
 
 Planned support: Python
 
+```bash
+npm i -g @subratamondal/project-init
+project-init
+```
+OR
+```bash
+npx @subratamondal/project-init
+```
+
 ## Demo
 ![demo](./.github/assets/demo.gif)
 
@@ -81,6 +90,10 @@ Run the initializer:
 ```bash
 project-init
 ```
+or use without installation
+```bash
+npx @subratamondal/project-init
+```
 
 Then follow the interactive prompts.
 
@@ -92,6 +105,24 @@ Then follow the interactive prompts.
 4. Choose your tooling stack (ESLint, Prettier, Husky, etc.)
 5. Let project-init scaffold files and scripts
 6. Start coding
+
+## CLI Arguments
+
+project-init supports the following command-line arguments:
+
+- -h, --help
+	- Show help and exit.
+- -V, --version
+	- Print the tool version and exit.
+- -y, --yes
+	- Skip confirmation prompts and fast-forward project initialization (assume defaults).
+
+Example:
+
+```bash
+project-init -y
+```
+
 
 ## Roadmap
 
