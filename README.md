@@ -16,6 +16,15 @@ Current support: TypeScript
 
 Planned support: Python
 
+```bash
+npm i -g @subratamondal/project-init
+project-init
+```
+			OR
+```bash
+npx @subratamondal/project-init
+```
+
 ## Demo
 ![demo](./.github/assets/demo.gif)
 
@@ -80,6 +89,10 @@ Run the initializer:
 
 ```bash
 project-init
+```
+or use without installation
+```bash
+npx @subratamondal/project-init
 ```
 
 Then follow the interactive prompts.
