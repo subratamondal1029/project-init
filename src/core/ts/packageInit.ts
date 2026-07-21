@@ -89,6 +89,14 @@ const editPackage = async (): Promise<void> => {
   }
 };
 
+const addPnpmWorkspace = async () => {
+  if (tsState.packageManager !== "pnpm") return;
+
+  const pnpmWorkspacePath = resolveTemplatePath("pnpm", "pnpm-workspace.yaml");
+
+  await fs.copy(pnpmWorkspacePath, path.join(process.cwd(), "pnpm-workspace.yaml"));
+};
+
 export const packageInit = async (): Promise<void> => {
   // Implementation for initializing with package manager
   logger.start("Initializing TypeScript project...");
@@ -97,5 +105,9 @@ export const packageInit = async (): Promise<void> => {
     stdio: "pipe",
   });
   await editPackage();
+  if (tsState.packageManager === "pnpm") {
+    // prevent pnpm 10+ security issue for esbuild
+    await addPnpmWorkspace();
+  }
   logger.success("package.json is ready.");
 };
