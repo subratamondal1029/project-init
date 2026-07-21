@@ -92,19 +92,14 @@ const editPackage = async (): Promise<void> => {
 const addPnpmWorkspace = async () => {
   if (tsState.packageManager !== "pnpm") return;
 
-  let pnpmWorkspacePath: string;
+  const pnpmVersion = Number(
+    (await run("pnpm", ["--version"], { stdio: "pipe" })).stdio.join("").match(/^\d+/)?.[0]
+  );
 
-  const pnpmVersion = (await run("pnpm", ["--version"], { stdio: "pipe" })).stdio
-    .filter((s: unknown) => s)
-    .join("")
-    .trim()
-    .split(".")[0];
-
-  if (Number(pnpmVersion) < 11) {
-    pnpmWorkspacePath = resolveTemplatePath("pnpm", "pnpm-workspace_v10.yaml");
-  } else {
-    pnpmWorkspacePath = resolveTemplatePath("pnpm", "pnpm-workspace_v11.yaml");
-  }
+  const pnpmWorkspacePath: string = resolveTemplatePath(
+    "pnpm",
+    `pnpm-workspace_v${pnpmVersion < 11 ? 10 : 11}.yaml`
+  );
 
   await fs.copy(pnpmWorkspacePath, path.join(process.cwd(), "pnpm-workspace.yaml"));
 };
