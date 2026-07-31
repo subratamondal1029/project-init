@@ -18,7 +18,12 @@ export const filterDependencies = () => {
       // TODO: Temporary workaround for typescript-eslint until TypeScript 7 is supported.
       // See: #29
       if (tsState.eslint) {
-        const tsIndex = toolDependencies.findIndex((dep) => dep.startsWith("typescript"));
+        const tsIndex = toolDependencies.findIndex(
+          (dep) => dep === "typescript" || dep.startsWith("typescript")
+        );
+        if (tsIndex === -1) {
+          throw new Error('Default dependencies must include "typescript".');
+        }
         toolDependencies[tsIndex] = "typescript@^6"; // Replace typescript with the version@6
       }
 
