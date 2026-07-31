@@ -19,7 +19,7 @@ export const filterDependencies = () => {
       // See: #29
       if (tsState.eslint) {
         const tsIndex = toolDependencies.findIndex(
-          (dep) => dep === "typescript" || dep.startsWith("typescript")
+          (dep) => dep === "typescript" || dep.startsWith("typescript@")
         );
         if (tsIndex === -1) {
           throw new Error('Default dependencies must include "typescript".');
